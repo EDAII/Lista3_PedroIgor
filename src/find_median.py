@@ -6,7 +6,7 @@ def find_median(vetor_base, k, vetor, list_palpites = []):
             mom.append(find_median(vetor_base, k, vetor[i:i + 5], list_palpites))
             i += 5
         if len(mom) <= 5:
-            return check(vetor_base, vetor, find_median(vetor_base, k, mom, list_palpites), k, list_palpites)
+            return check(vetor_base, find_median(vetor_base, k, mom, list_palpites), k, list_palpites)
         else:
             return find_median(vetor_base, k, mom, list_palpites)
     else:
@@ -17,7 +17,7 @@ def find_median(vetor_base, k, vetor, list_palpites = []):
             return vetor[int((len(vetor) - 1) / 2)]
 
 
-def check(vetor_base, vetor, palpite, k, list_palpites = []):
+def check(vetor_base, palpite, k, list_palpites = []):
     list_palpites.append(palpite)
 
     l = []
@@ -33,17 +33,17 @@ def check(vetor_base, vetor, palpite, k, list_palpites = []):
         if len(r) <= 5:
             r.sort()
             if len(r) % 2 == 0:
-                return check(r, r, r[int((len(r) / 2)) - 1], k - len(l) - 1, list_palpites)
+                return check(r, r[int((len(r) / 2)) - 1], k - len(l) - 1, list_palpites)
             else:
-                return check(r, r, r[int((len(r) - 1) / 2)], k - len(l) - 1, list_palpites)
+                return check(r, r[int((len(r) - 1) / 2)], k - len(l) - 1, list_palpites)
         else:
             return find_median(r, k - len(l) - 1, r)
     else:
         if len(l) <= 5:
             l.sort()
             if len(l) % 2 == 0:
-                return check(l, l, l[int((len(l) / 2)) - 1], k, list_palpites)
+                return check(l, l[int((len(l) / 2)) - 1], k, list_palpites)
             else:
-                return check(l, l, l[int((len(l) - 1) / 2)], k, list_palpites)
+                return check(l, l[int((len(l) - 1) / 2)], k, list_palpites)
         else:
             return find_median(l, k, l)
