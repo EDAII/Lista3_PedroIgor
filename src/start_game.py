@@ -43,11 +43,15 @@ def start():
 
     dict = {}
     numbers = numbers_gen.numbers_gen()
+
+
+
     machine_result = find_median.find_median(numbers, ceil(len(numbers)/2), numbers)
+
     median = machine_result[-1]
     print(machine_result)
     print(median)
-
+    found = False
     i = 0
     for p in card_pos:
         dict[p] = numbers[i]
@@ -69,6 +73,8 @@ def start():
                     user_steps += 1
         pygame.display.update()
         screen.fill((0, 0, 0))
+        if found:
+            machine_game.start(numbers, [], machine_result)
         """
         if result:
             result_screen.begin(result, machine_steps, user_steps)
@@ -102,6 +108,8 @@ def start():
                     tips_text = tips_font.render("A mediana é maior que "+str(dict[card_selected[-1]]), False, (255, 255, 255))
                 else:
                     tips_text = tips_font.render("Você encontrou a mediana: " + str(dict[card_selected[-1]]), False, (255, 255, 255))
+                    found = True
+
             textsurface = myfont.render(str(dict[pos]), False, (255, 255, 255))
             screen.blit(tips_text, (50, 475))
             screen.blit(show, pos)
