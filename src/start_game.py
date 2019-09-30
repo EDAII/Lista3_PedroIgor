@@ -51,8 +51,6 @@ def start():
     machine_result = find_median.find_median(numbers, ceil(len(numbers)/2), numbers)
 
     median = machine_result[-1]
-    print(machine_result)
-    print(median)
     found = False
     i = 0
     for p in card_pos:
@@ -76,30 +74,16 @@ def start():
         pygame.display.update()
         screen.fill((0, 0, 0))
         if found:
-            machine_game.start(numbers, [], machine_result)
-        """
-        if result:
-            result_screen.begin(result, machine_steps, user_steps)
-        """
+            time.sleep(3)
+            machine_game.start(numbers, user_steps, machine_result)
+
         for pos in card_pos:
             show = card_skin
 
             if pos in card_selected:
 
                 if dict[pos] == median:
-                    print('achou')
                     show = card_found
-                    """
-                    
-                    screen.blit(show, pos)
-                    if user_steps > machine_steps:
-                        result = 'Você perdeu.'
-                    elif user_steps < machine_steps:
-                        # time.sleep(3)
-                        result = ('Você ganhou.')
-                    else:
-                        result = ('Empatamos')
-                    """
 
                 elif dict[pos] < median:
                     show = card_skin_selected_less

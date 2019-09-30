@@ -1,8 +1,6 @@
 import pygame
 from pygame.locals import *
-from math import ceil
-from src import numbers_gen
-from src import find_median
+from src import result_screen
 import time
 
 
@@ -44,20 +42,16 @@ def start(numbers, user_steps, machine_steps):
     pygame.font.init()  # you have to call this at the start,
     # if you want to use this module.
     myfont = pygame.font.SysFont('bold', 18)
-    mouse_position = ()
-    card_selected = [()]
+
 
     dict = {}
 
     i = 0
+    found = False
     for p in card_pos:
         dict[p] = numbers[i]
         i += 1
-    # machine_steps = min(binary_search_result, index_search_result)
-    user_steps = 0
-    result = ''
-    print('machine')
-    print(machine_steps)
+
     while True:
         if machine_palpites == []:
             tips_text = tips_font.render("Minha vez..", False, (255, 255, 255))
@@ -72,18 +66,18 @@ def start(numbers, user_steps, machine_steps):
                 exit()
 
         pygame.display.update()
+        if found:
+            time.sleep(3)
+            result_screen.begin(len(machine_palpites), user_steps)
         time.sleep(3)
         screen.fill((0, 0, 0))
-        """
-        if result:
-            result_screen.begin(result, machine_steps, user_steps)
-        """
+
         for pos in card_pos:
             show = card_skin
             if dict[pos] in machine_palpites:
                 if dict[pos] == median:
-                    print('achou')
                     show = card_found
+                    found = True
                 elif dict[pos] < median:
                     show = card_skin_selected_less
                 else:
