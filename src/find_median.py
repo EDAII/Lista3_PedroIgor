@@ -28,7 +28,7 @@ def check(vetor_base, palpite, k, list_palpites = []):
         elif i > palpite:
             r.append(i)
     if len(l) == k - 1:
-        return palpite, list_palpites
+        return list_palpites
     elif len(l) < k:
         if len(r) <= 5:
             r.sort()

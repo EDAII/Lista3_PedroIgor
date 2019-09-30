@@ -28,9 +28,12 @@ def start():
     card_skin = pygame.Surface((35, 50))
     card_skin.fill((150, 65, 200))
     card_skin_selected = pygame.Surface((35, 50))
-    card_skin_selected.fill((200, 35, 35))
+    card_skin_selected.fill((0, 0, 255))
     card_found = pygame.Surface((35, 50))
     card_found.fill((35, 200, 35))
+
+    tips_font = pygame.font.SysFont('bold', 50)
+    tips_text = tips_font.render("", False, (255, 255, 255))
 
     pygame.font.init()  # you have to call this at the start,
     # if you want to use this module.
@@ -40,7 +43,8 @@ def start():
 
     dict = {}
     numbers = numbers_gen.numbers_gen()
-    median, machine_result = find_median.find_median(numbers, ceil(len(numbers)/2), numbers)
+    machine_result = find_median.find_median(numbers, ceil(len(numbers)/2), numbers)
+    median = machine_result[-1]
     print(machine_result)
     print(median)
 
@@ -71,11 +75,14 @@ def start():
         """
         for pos in card_pos:
             show = card_skin
-            """
+
             if pos in card_selected:
-                
-                if dict[pos] == number_to_find:
+
+                if dict[pos] == median:
+                    print('achou')
                     show = card_found
+                    """
+                    
                     screen.blit(show, pos)
                     if user_steps > machine_steps:
                         result = 'Você perdeu.'
@@ -84,10 +91,18 @@ def start():
                         result = ('Você ganhou.')
                     else:
                         result = ('Empatamos')
+                    """
+
                 else:
                     show = card_skin_selected
-                textsurface = myfont.render(str(dict[pos]), False, (255, 255, 255))
-            """
+            if card_selected!=[()]:
+                if dict[card_selected[-1]] > median:
+                    tips_text = tips_font.render("A mediana é menor que "+str(dict[card_selected[-1]]), False, (255, 255, 255))
+                elif dict[card_selected[-1]] < median:
+                    tips_text = tips_font.render("A mediana é maior que "+str(dict[card_selected[-1]]), False, (255, 255, 255))
+                else:
+                    tips_text = tips_font.render("Você encontrou a mediana: " + str(dict[card_selected[-1]]), False, (255, 255, 255))
             textsurface = myfont.render(str(dict[pos]), False, (255, 255, 255))
+            screen.blit(tips_text, (50, 475))
             screen.blit(show, pos)
             screen.blit(textsurface, (pos[0], pos[1] + 18))
