@@ -31,8 +31,10 @@ def start(numbers, user_steps, machine_steps):
     # criando superfície das cartas
     card_skin = pygame.Surface((35, 50))
     card_skin.fill((150, 65, 200))
-    card_skin_selected = pygame.Surface((35, 50))
-    card_skin_selected.fill((0, 0, 255))
+    card_skin_selected_less = pygame.Surface((35, 50))
+    card_skin_selected_less.fill((255, 0, 0))
+    card_skin_selected_more = pygame.Surface((35, 50))
+    card_skin_selected_more.fill((0, 0, 255))
     card_found = pygame.Surface((35, 50))
     card_found.fill((35, 200, 35))
 
@@ -82,8 +84,10 @@ def start(numbers, user_steps, machine_steps):
                 if dict[pos] == median:
                     print('achou')
                     show = card_found
+                elif dict[pos] < median:
+                    show = card_skin_selected_less
                 else:
-                    show = card_skin_selected
+                    show = card_skin_selected_more
 
             if machine_palpites[-1] > median:
                 tips_text = tips_font.render("A mediana é menor que " + str(machine_palpites[-1]), False, (255, 255, 255))
