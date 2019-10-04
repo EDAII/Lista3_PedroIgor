@@ -9,6 +9,8 @@ def start(numbers, user_steps, machine_steps):
     median = machine_steps[-1]
     machine_palpites = []
     pygame.init()
+    start_music = pygame.mixer.Sound("snd/start.wav")
+    start_music.play(-1)
 
     screen_size = (705, 512)
 
@@ -64,10 +66,12 @@ def start(numbers, user_steps, machine_steps):
             if event.type == QUIT:
                 pygame.quit()
                 exit()
-
+        select_sound = pygame.mixer.Sound("snd/button-25.wav")
+        select_sound.play()
         pygame.display.update()
         if found:
             time.sleep(3)
+            start_music.stop()
             result_screen.begin(len(machine_palpites), user_steps)
         time.sleep(3)
         screen.fill((0, 0, 0))

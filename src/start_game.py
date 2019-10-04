@@ -8,6 +8,8 @@ from src import machine_game
 import time
 def start():
     pygame.init()
+    start_music = pygame.mixer.Sound("snd/start.wav")
+    start_music.play(-1)
 
     screen_size = (705, 512)
 
@@ -67,6 +69,8 @@ def start():
             elif event.type == MOUSEBUTTONDOWN:
                 mouse_position = (pygame.mouse.get_pos()[1], pygame.mouse.get_pos()[0])
                 if mouse_position[0] <= 462:
+                    select_sound = pygame.mixer.Sound("snd/button-25.wav")
+                    select_sound.play()
                     last = [screen_size[0], screen_size[1]]
                     card_selected_index = (ceil((mouse_position[0]) / 67) - 1, ceil((mouse_position[1]) / 47) - 1)
                     card_selected.append(card_pos[card_selected_index[1] * 7 + card_selected_index[0]])
@@ -75,6 +79,7 @@ def start():
         screen.fill((0, 0, 0))
         if found:
             time.sleep(3)
+            start_music.stop()
             machine_game.start(numbers, user_steps, machine_result)
 
         for pos in card_pos:
